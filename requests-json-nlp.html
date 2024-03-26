@@ -7742,38 +7742,30 @@ wheel              0.43.0
 <span class="kn">import</span> <span class="nn">spacy</span>
 <span class="kn">from</span> <span class="nn">spacytextblob.spacytextblob</span> <span class="kn">import</span> <span class="n">SpacyTextBlob</span>
 
-<span class="c1"># Load spaCy model with TextBlob capabilities</span>
 <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">"en_core_web_sm"</span><span class="p">)</span>
 <span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s2">"spacytextblob"</span><span class="p">)</span>
 
-<span class="c1"># Read the contents of the JSON file</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'lyrics_data.json'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
-<span class="c1"># Extract the lyrics text from the JSON data</span>
 <span class="n">lyrics</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'lyrics'</span><span class="p">]</span>
 
-<span class="c1"># Print the lyrics of the song</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Lyrics of the song:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">()</span>
 
-<span class="c1"># Perform sentiment analysis on the lyrics</span>
 <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
 
-<span class="c1"># Get the polarity score of the sentiment analysis</span>
 <span class="n">polarity_score</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">polarity</span>
 
-<span class="c1"># Truncate the polarity score to two decimal places</span>
 <span class="n">truncated_score</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">polarity_score</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Print the truncated polarity score</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Polarity score:"</span><span class="p">,</span> <span class="n">truncated_score</span><span class="p">)</span>
 
-<span class="c1"># Answer to the question:</span>
+<span class="c1"># Answer</span>
 <span class="c1"># Based on the polarity score:</span>
 <span class="c1"># If truncated_score &gt; 0, it indicates positive sentiment.</span>
-<span class="c1"># If truncated_score &lt; 0, it indicates negative sen</span>
+<span class="c1"># If truncated_score &lt; 0, it indicates negative sentiment.</span>
 </pre></div>
 </div>
 </div>
@@ -8020,42 +8012,60 @@ Polarity score for 'Just': 0.46
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">spacy</span>
 <span class="kn">from</span> <span class="nn">spacytextblob.spacytextblob</span> <span class="kn">import</span> <span class="n">SpacyTextBlob</span>
 
-<span class="k">def</span> <span class="nf">analyze_lyrics_sentiment</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">analyze_lyrics_sentiment</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">custom_comments</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Perform sentiment analysis on song lyrics stored in a file and return the polarity score.</span>
 
 <span class="sd">    Parameters:</span>
 <span class="sd">        filename (str): The name of the file containing song lyrics.</span>
+<span class="sd">        custom_comments (str, optional): Custom comments to be included in the table. Defaults to None.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        float: The polarity score indicating the sentiment of the lyrics.</span>
+<span class="sd">        tuple: A tuple containing the polarity score, sentiment (negative/positive), and comments.</span>
 <span class="sd">    """</span>
-    <span class="c1"># Load spaCy model with TextBlob capabilities</span>
+
     <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">"en_core_web_sm"</span><span class="p">)</span>
     <span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s2">"spacytextblob"</span><span class="p">)</span>
 
-    <span class="c1"># Read the contents of the file</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">lyrics</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-    <span class="c1"># Perform sentiment analysis on the lyrics</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">lyrics</span><span class="p">)</span>
 
-    <span class="c1"># Get the polarity score of the sentiment analysis</span>
     <span class="n">polarity_score</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">polarity</span>
+    <span class="n">sentiment</span> <span class="o">=</span> <span class="s2">"Negative"</span> <span class="k">if</span> <span class="n">polarity_score</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">"Positive"</span>
 
-    <span class="c1"># Truncate the polarity score to two decimal places</span>
+    <span class="k">if</span> <span class="n">polarity_score</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="n">comments</span> <span class="o">=</span> <span class="s2">"Highly Positive"</span>
+    <span class="k">elif</span> <span class="n">polarity_score</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">:</span>
+        <span class="n">comments</span> <span class="o">=</span> <span class="s2">"Positive"</span>
+    <span class="k">elif</span> <span class="n">polarity_score</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">:</span>
+        <span class="n">comments</span> <span class="o">=</span> <span class="s2">"Highly Negative"</span>
+    <span class="k">elif</span> <span class="n">polarity_score</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">:</span>
+        <span class="n">comments</span> <span class="o">=</span> <span class="s2">"Negative"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">comments</span> <span class="o">=</span> <span class="s2">"Neutral"</span>
+
+    <span class="k">if</span> <span class="n">custom_comments</span><span class="p">:</span>
+        <span class="n">comments</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">" - </span><span class="si">{</span><span class="n">custom_comments</span><span class="si">}</span><span class="s2">"</span>
+
     <span class="n">truncated_score</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">polarity_score</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">truncated_score</span>
+    <span class="k">return</span> <span class="n">truncated_score</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">,</span> <span class="n">comments</span>
 
-<span class="c1"># Test the function with the three files created in question 3</span>
+<span class="n">filename_custom_comments</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"shape_of_you_lyrics.txt"</span><span class="p">:</span> <span class="s2">"Yes, I agree that this song is positive."</span><span class="p">,</span>
+    <span class="s2">"shake_it_off_lyrics.txt"</span><span class="p">:</span> <span class="s2">"No, I thought this was a positive song."</span><span class="p">,</span>
+    <span class="s2">"hello_lyrics.txt"</span><span class="p">:</span> <span class="s2">"No, I feel like this is more negative than neutral"</span><span class="p">,</span>
+    <span class="s2">"just_the_way_you_are_lyrics.txt"</span><span class="p">:</span> <span class="s2">"Yes, I agree this is a positive song."</span>
+<span class="p">}</span>
+
 <span class="n">filename_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">"shape_of_you_lyrics.txt"</span><span class="p">,</span>
     <span class="s2">"shake_it_off_lyrics.txt"</span><span class="p">,</span>
@@ -8063,10 +8073,13 @@ Polarity score for 'Just': 0.46
     <span class="s2">"just_the_way_you_are_lyrics.txt"</span>
 <span class="p">]</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Song Name               | Polarity Score | Sentiment | Comments"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span><span class="o">*</span><span class="mi">65</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filename_list</span><span class="p">:</span>
-    <span class="n">song_name</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"_"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>  <span class="c1"># Extract the song name from the filename</span>
-    <span class="n">polarity_score</span> <span class="o">=</span> <span class="n">analyze_lyrics_sentiment</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Polarity score for '</span><span class="si">{</span><span class="n">song_name</span><span class="si">}</span><span class="s2">': </span><span class="si">{</span><span class="n">polarity_score</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">custom_comment</span> <span class="o">=</span> <span class="n">filename_custom_comments</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">polarity_score</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">,</span> <span class="n">comments</span> <span class="o">=</span> <span class="n">analyze_lyrics_sentiment</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">custom_comments</span><span class="o">=</span><span class="n">custom_comment</span><span class="p">)</span>
+    <span class="n">song_name</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"_"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>  
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">song_name</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="si">}</span><span class="s2">| </span><span class="si">{</span><span class="n">polarity_score</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">"| </span><span class="si">{</span><span class="n">sentiment</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">"| </span><span class="si">{</span><span class="n">comments</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8079,10 +8092,12 @@ Polarity score for 'Just': 0.46
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Polarity score for 'Shape': 0.32
-Polarity score for 'Shake': -0.49
-Polarity score for 'Hello': -0.15
-Polarity score for 'Just': 0.46
+<pre>Song Name               | Polarity Score | Sentiment | Comments
+=================================================================
+Shape                  | 0.32| Positive | Positive - Yes, I agree that this song is positive.
+Shake                  | -0.49| Negative | Negative - No, I thought this was a positive song.
+Hello                  | -0.15| Negative | Neutral - No, I feel like this is more negative than neutral
+Just                   | 0.46| Positive | Positive - Yes, I agree this is a positive song.
 </pre>
 </div>
 </div>
@@ -8093,10 +8108,10 @@ Polarity score for 'Just': 0.46
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">jupyter</span> <span class="n">nbconvert</span> <span class="o">--</span><span class="n">to</span> <span class="n">html</span> <span class="n">requests</span><span class="o">-</span><span class="n">json</span><span class="o">-</span><span class="n">nlp</span><span class="o">.</span><span class="n">ipynb</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter<span class="w"> </span>nbconvert<span class="w"> </span>--to<span class="w"> </span>html<span class="w"> </span>requests-json-nlp.ipynb
 </pre></div>
 </div>
 </div>
@@ -8109,11 +8124,8 @@ Polarity score for 'Just': 0.46
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>
-<span class="ansi-cyan-intense-fg ansi-bold">  Cell </span><span class="ansi-green-intense-fg ansi-bold">In[27], line 1</span>
-<span class="ansi-yellow-intense-fg ansi-bold">    jupyter nbconvert --to html requests-json-nlp.ipynb</span>
-<span class="ansi-white-intense-fg ansi-bold">            ^</span>
-<span class="ansi-red-intense-fg ansi-bold">SyntaxError</span><span class="ansi-red-intense-fg ansi-bold">:</span> invalid syntax
+<pre>[NbConvertApp] Converting notebook requests-json-nlp.ipynb to html
+[NbConvertApp] Writing 300734 bytes to requests-json-nlp.html
 </pre>
 </div>
 </div>
